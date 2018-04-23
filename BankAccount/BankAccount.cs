@@ -21,8 +21,9 @@ namespace BankAccount
 
         public void Debit(decimal amount)
         {
-            balance -= amount;
-            
+            if (balance < amount)
+                throw new Exception("Insufficient Funds.");
+            balance -= amount;   
         }
     }
 }
