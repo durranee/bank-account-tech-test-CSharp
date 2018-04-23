@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;  
 
 namespace BankAccount.Tests
@@ -33,20 +34,47 @@ namespace BankAccount.Tests
             Assert.AreEqual(1000, account.GetBalance());
         }
 
-        //[TestMethod]
-        //public void ExpectCreditToCreateATransactionLog()
-        //{
-        //    BankAccount account = new BankAccount();
-        //    account.Credit(DateTime.ParseExact("20/02/2018", "dd/MM/yyyy", null), 1000);
-        //    Transaction obj = new Transaction()
-        //    {
-        //        date = DateTime.ParseExact("20/02/2018", "dd/MM/yyyy", null),
-        //        credit = 1000,
-        //        debit = 0,
-        //        balance = 1000
-        //    };
-        //    Assert.AreEqual<Transaction>(obj, account.statement[0]);
-        //}
+        [TestMethod]
+        public void ExpectCreditToCreateATransactionLog()
+        {
+            BankAccount account = new BankAccount();
+            account.Credit(DateTime.ParseExact("20/02/2018", "dd/MM/yyyy", null), 1000);
+            Transaction newStatement = new Transaction() 
+            { 
+                date = DateTime.ParseExact("20/02/2018", "dd/MM/yyyy", null),
+                credit = 1000, 
+                debit = 0, 
+                balance = 1000 
+            };
+
+            bool result = Object.Equals(newStatement.date, account.statement[0].date);
+            result = Object.Equals(newStatement.credit, account.statement[0].credit);
+            result = Object.Equals(newStatement.debit, account.statement[0].debit);
+            result = Object.Equals(newStatement.balance, account.statement[0].balance);
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod]
+        public void ExpectDebitToCreateATransactionLog()
+        {
+            BankAccount account = new BankAccount();
+            account.Credit(DateTime.ParseExact("20/02/2018", "dd/MM/yyyy", null), 1000);
+            account.Debit(DateTime.ParseExact("21/02/2018", "dd/MM/yyyy", null), 100);
+
+            Transaction newStatement = new Transaction()
+            {
+                date = DateTime.ParseExact("21/02/2018", "dd/MM/yyyy", null),
+                credit = 0,
+                debit = 100,
+                balance = 900
+            };
+
+            bool result = Object.Equals(newStatement.date, account.statement[1].date);
+            result = Object.Equals(newStatement.credit, account.statement[1].credit);
+            result = Object.Equals(newStatement.debit, account.statement[1].debit);
+            result = Object.Equals(newStatement.balance, account.statement[1].balance);
+            Assert.AreEqual(true, result);
+        }
 
 
         [TestMethod]
