@@ -99,20 +99,5 @@ namespace BankAccount.Tests
                 Assert.AreEqual("Insufficient Funds.", ex.Message);
             }
         }
-
-        [TestMethod]
-        public void ItShouldPrintTransactionHistory()
-        {
-            using (StringWriter sw = new StringWriter())
-            {
-                Console.SetOut(sw);
-                BankAccount account = new BankAccount();
-                account.Credit(DateTime.ParseExact("20/04/2018", "dd/MM/yyyy", null), 2000);
-                account.PrintStatement();
-                string expected = string.Format("{0,-12} || {1,10} || {2,-10} || {3,10}\n", "Date", "Credit", "Debit", "Balance");
-                expected += string.Format("{0,-12} || {1,10} || {2,-10} || {3,10}\n", "04/20/2018", "2000", "0", "2000");
-                Assert.AreEqual(expected, sw.ToString());
-            }
-        }
     }
 }

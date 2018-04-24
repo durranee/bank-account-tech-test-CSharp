@@ -3,15 +3,6 @@ using System.Collections.Generic;
 
 namespace BankAccount
 {
-    public class Transaction
-    {
-        public DateTime date { get; set; }
-        public decimal credit { get; set; }
-        public decimal debit { get; set; }
-        public decimal balance { get; set; }
-
-    }
-
     public class BankAccount
     {
         decimal balance;
@@ -42,35 +33,5 @@ namespace BankAccount
 
         }
 
-        public void PrintStatement()
-        {
-            PrintHeader();
-
-            foreach(Transaction transaction in statement)
-            {
-                Console.WriteLine("{0,-12} || {1,10} || {2,-10} || {3,10}",
-                                  transaction.date.ToShortDateString(),
-                                  transaction.credit,
-                                  transaction.debit,
-                                  transaction.balance
-                                 );
-            }
-        }
-
-
-        private void PrintHeader()
-        {
-            Console.WriteLine("{0,-12} || {1,10} || {2,-10} || {3,10}", "Date", "Credit", "Debit", "Balance");
-
-        }
-
-
-        public void main(){
-            Credit(DateTime.Now, 2015);
-            Debit(DateTime.Today, 1000);
-            Console.WriteLine("hello world");
-            PrintStatement();
-
-        }
     }
 }
